@@ -1,6 +1,7 @@
 package com.course.course.management.Services;
 
 import com.course.course.management.Models.Course;
+import com.course.course.management.Models.Instructor;
 import com.course.course.management.Repositories.CourseRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,12 @@ public class CourseService {
     // Update Course
     public Course updateCourse(Long id, Course courseObj){
         Course course = courseRepository.findById(id).orElseThrow();
-        course.setDescription(courseObj.getDescription());
-        course.setTitle(courseObj.getTitle());
+        if (courseObj.getDescription() != null)
+            course.setDescription(courseObj.getDescription());
+        if (courseObj.getTitle() != null)
+            course.setTitle(courseObj.getTitle());
+        if (courseObj.getInstructor() != null)
+            course.setInstructor(courseObj.getInstructor());
         courseRepository.save(course);
         return course;
     }
@@ -39,5 +44,10 @@ public class CourseService {
         Course course = courseRepository.findById(id).orElseThrow();
         courseRepository.delete(course);
         return course;
+    }
+
+    // Get Courses By Instructor
+    public List<Course> getCourseByInstructor(Long instructor){
+        return courseRepository.findAll().stream().filter(course -> course.getInstructor().getId().equals(instructor)).toList();
     }
 }

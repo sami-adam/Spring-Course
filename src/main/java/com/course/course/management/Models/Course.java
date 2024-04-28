@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.hibernate.mapping.Selectable;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "course")
@@ -19,7 +20,8 @@ public class Course {
     private Instructor instructor;
     private Date startDate;
     private Date endDate;
-
+    @ManyToMany(mappedBy = "courses")
+    private List<Student> students;
 
     public Long getId() {
         return id;
@@ -67,5 +69,13 @@ public class Course {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }

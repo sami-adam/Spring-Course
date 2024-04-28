@@ -34,4 +34,9 @@ public class CourseController {
     public Course deleteCourse(@Param("id") Long id){
         return courseService.deleteCourse(id);
     }
+
+    @GetMapping("/getCourseByInstructor")
+    public List<Course> getCourseByInstructor(@Param("instructorId") Long instructorId){
+        return courseService.getCourseByInstructor(instructorId);
+    }
 }
